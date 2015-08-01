@@ -66,6 +66,8 @@ class Pcl < Formula
   option "with-examples", "Build pcl examples."
   option "without-tools", "Build without tools."
   option "without-apps", "Build without apps."
+  option "with-qt5", "Build with Qt5"
+  option "without-qt", "Build without Qt4"
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
@@ -78,10 +80,15 @@ class Pcl < Formula
   depends_on "qhull"
   depends_on "libusb"
   depends_on "qt" => :recommended
-  if build.with? "qt"
+  depends_on "qt5" => :optional
+  if build.with?("qt") || build.with?("qt5")
     depends_on "sip" # Fix for building system
     depends_on "pyqt" # Fix for building system
-    depends_on "vtk" => [:recommended, "with-qt"]
+    if build.with?("qt5")
+      depends_on "vtk" => [:recommended, "with-qt5"]
+    else
+      depends_on "vtk" => [:recommended, "with-qt"]
+    end
   else
     depends_on "vtk" => :recommended
   end
@@ -97,7 +104,6 @@ class Pcl < Formula
       -DBUILD_global_tests:BOOL=OFF
       -DWITH_TUTORIALS:BOOL=OFF
       -DWITH_DOCS:BOOL=OFF
-      -DPCL_QT_VERSION=4
     ]
 
     if build.head? && (build.with? "cuda")
@@ -140,7 +146,15 @@ class Pcl < Formula
       args << "-DCMAKE_DISABLE_FIND_PACKAGE_OpenNI:BOOL=TRUE"
     end
 
-    args << "-DWITH_QT:BOOL=FALSE" if build.without? "qt"
+
+    if build.with?("qt5")
+      args << "-DPCL_QT_VERSION:STRING=5"
+    elsif build.without?("qt")
+      args << "-DWITH_QT:BOOL=FALSE"
+    else
+      args << "-DPCL_QT_VERSION:STRING=4"
+    end
+
     args << "-DCMAKE_DISABLE_FIND_PACKAGE_VTK:BOOL=TRUE" if build.without? "vtk"
 
     args << ".."
@@ -160,8 +174,8 @@ index 2f0425e..0675a55 100644
 +++ b/cmake/pcl_find_cuda.cmake
 @@ -1,16 +1,6 @@
  # Find CUDA
- 
- 
+
+
 -# Recent versions of cmake set CUDA_HOST_COMPILER to CMAKE_C_COMPILER which
 -# on OSX defaults to clang (/usr/bin/cc), but this is not a supported cuda
 -# compiler.  So, here we will preemptively set CUDA_HOST_COMPILER to gcc if
@@ -178,11 +192,11 @@ index 2f0425e..0675a55 100644
 @@ -47,10 +37,5 @@ if(CUDA_FOUND)
  	include(${PCL_SOURCE_DIR}/cmake/CudaComputeTargetFlags.cmake)
  	APPEND_TARGET_ARCH_FLAGS()
-     
+
 -  # Send a warning if CUDA_HOST_COMPILER is set to a compiler that is known
 -  # to be unsupported.
 -  if (CUDA_HOST_COMPILER STREQUAL CMAKE_C_COMPILER AND CMAKE_C_COMPILER_ID STREQUAL "Clang")
 -    message(WARNING "CUDA_HOST_COMPILER is set to an unsupported compiler: ${CMAKE_C_COMPILER}.  See http://dev.pointclouds.org/issues/979")
 -  endif()
- 
+
  endif()
