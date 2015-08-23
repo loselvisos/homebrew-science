@@ -66,8 +66,8 @@ class Pcl < Formula
   option "with-examples", "Build pcl examples."
   option "without-tools", "Build without tools."
   option "without-apps", "Build without apps."
-  option "with-qt5", "Build with Qt5"
-  option "without-qt", "Build without Qt4"
+  depends_on "qt" => :recommended
+  depends_on "qt5" => :optional
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
@@ -79,8 +79,7 @@ class Pcl < Formula
 
   depends_on "qhull"
   depends_on "libusb"
-  depends_on "qt" => :recommended
-  depends_on "qt5" => :optional
+
   if build.with?("qt") || build.with?("qt5")
     depends_on "sip" # Fix for building system
     depends_on "pyqt" # Fix for building system
