@@ -119,15 +119,20 @@ class Pcl < Formula
     end
 
     if build.with? "apps"
-      args += %W[
-        -DBUILD_apps=AUTO_OFF
-        -DBUILD_apps_3d_rec_framework=AUTO_OFF
-        -DBUILD_apps_cloud_composer=AUTO_OFF
-        -DBUILD_apps_in_hand_scanner=AUTO_OFF
-        -DBUILD_apps_modeler=AUTO_OFF
-        -DBUILD_apps_optronic_viewer=AUTO_OFF
-        -DBUILD_apps_point_cloud_editor=AUTO_OFF
-      ]
+      if build.with?("qt") || build.with?("qt5")
+	      args += %W[
+	        -DBUILD_apps=AUTO_OFF
+	        -DBUILD_apps_3d_rec_framework=AUTO_OFF
+	        -DBUILD_apps_cloud_composer=AUTO_OFF
+	        -DBUILD_apps_in_hand_scanner=AUTO_OFF
+	        -DBUILD_apps_modeler=AUTO_OFF
+	        -DBUILD_apps_optronic_viewer=AUTO_OFF
+	        -DBUILD_apps_point_cloud_editor=AUTO_OFF
+	      ]
+	  else
+	  	opoo "Attempting to build apps but QT has been explicitly disabled. Disabling apps."
+	  	args << "-DBUILD_apps:BOOL=OFF"
+	  end
     else
       args << "-DBUILD_apps:BOOL=OFF"
     end
