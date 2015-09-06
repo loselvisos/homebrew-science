@@ -120,19 +120,19 @@ class Pcl < Formula
 
     if build.with? "apps"
       if build.with?("qt") || build.with?("qt5")
-	      args += %W[
-	        -DBUILD_apps=AUTO_OFF
-	        -DBUILD_apps_3d_rec_framework=AUTO_OFF
-	        -DBUILD_apps_cloud_composer=AUTO_OFF
-	        -DBUILD_apps_in_hand_scanner=AUTO_OFF
-	        -DBUILD_apps_modeler=AUTO_OFF
-	        -DBUILD_apps_optronic_viewer=AUTO_OFF
-	        -DBUILD_apps_point_cloud_editor=AUTO_OFF
-	      ]
-	  else
-	  	opoo "Attempting to build apps but QT has been explicitly disabled. Disabling apps."
-	  	args << "-DBUILD_apps:BOOL=OFF"
-	  end
+        args += %W[
+          -DBUILD_apps=AUTO_OFF
+          -DBUILD_apps_3d_rec_framework=AUTO_OFF
+          -DBUILD_apps_cloud_composer=AUTO_OFF
+          -DBUILD_apps_in_hand_scanner=AUTO_OFF
+          -DBUILD_apps_modeler=AUTO_OFF
+          -DBUILD_apps_optronic_viewer=AUTO_OFF
+          -DBUILD_apps_point_cloud_editor=AUTO_OFF
+        ]
+    else
+      opoo "Attempting to build apps but QT has been explicitly disabled. Disabling apps."
+      args << "-DBUILD_apps:BOOL=OFF"
+    end
     else
       args << "-DBUILD_apps:BOOL=OFF"
     end
@@ -192,11 +192,11 @@ index 2f0425e..0675a55 100644
 -endif()
 -
  if(MSVC11)
- 	# Setting this to true brakes Visual Studio builds.
- 	set(CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE OFF CACHE BOOL "CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE")
+   # Setting this to true brakes Visual Studio builds.
+   set(CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE OFF CACHE BOOL "CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE")
 @@ -47,10 +37,5 @@ if(CUDA_FOUND)
- 	include(${PCL_SOURCE_DIR}/cmake/CudaComputeTargetFlags.cmake)
- 	APPEND_TARGET_ARCH_FLAGS()
+   include(${PCL_SOURCE_DIR}/cmake/CudaComputeTargetFlags.cmake)
+   APPEND_TARGET_ARCH_FLAGS()
 
 -  # Send a warning if CUDA_HOST_COMPILER is set to a compiler that is known
 -  # to be unsupported.
