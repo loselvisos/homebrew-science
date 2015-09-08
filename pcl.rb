@@ -192,11 +192,11 @@ index 2f0425e..0675a55 100644
 -endif()
 -
  if(MSVC11)
-   # Setting this to true brakes Visual Studio builds.
-   set(CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE OFF CACHE BOOL "CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE")
+ 	# Setting this to true brakes Visual Studio builds.
+ 	set(CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE OFF CACHE BOOL "CUDA_ATTACH_VS_BUILD_RULE_TO_CUDA_FILE")
 @@ -47,10 +37,5 @@ if(CUDA_FOUND)
-   include(${PCL_SOURCE_DIR}/cmake/CudaComputeTargetFlags.cmake)
-   APPEND_TARGET_ARCH_FLAGS()
+ 	include(${PCL_SOURCE_DIR}/cmake/CudaComputeTargetFlags.cmake)
+ 	APPEND_TARGET_ARCH_FLAGS()
 
 -  # Send a warning if CUDA_HOST_COMPILER is set to a compiler that is known
 -  # to be unsupported.
