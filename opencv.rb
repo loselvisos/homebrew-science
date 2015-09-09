@@ -152,7 +152,7 @@ class Opencv < Formula
     EOS
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-o", "test"
     assert_equal `./test`.strip, version.to_s
-    
+
     pythons = []
     pythons << "python"  if build.with? "python"
     pythons << "python3" if build.with? "python3"
