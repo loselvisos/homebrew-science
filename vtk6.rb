@@ -1,4 +1,4 @@
-class Vtk < Formula
+class Vtk6 < Formula
   homepage "http://www.vtk.org"
   url "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
   mirror "https://fossies.org/linux/misc/VTK-6.3.0.tar.gz"
