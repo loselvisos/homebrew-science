@@ -3,8 +3,8 @@ class Vtk6 < Formula
   url "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
   mirror "https://fossies.org/linux/misc/VTK-6.3.0.tar.gz"
   sha256 "92a493354c5fa66bea73b5fc014154af5d9f3f6cee8d20a826f4cd5d4b0e8a5e"
-  head "https://github.com/Kitware/VTK.git"
   revision 1
+  head "https://github.com/Kitware/VTK.git"
 
   bottle do
     sha256 "7e2ded78d69e2cb86e30f2cece78ab66acf553970676251e3d32685fdf7c7443" => :el_capitan
