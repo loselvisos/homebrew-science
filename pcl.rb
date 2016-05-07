@@ -161,6 +161,8 @@ class Pcl < Formula
 
     args << "-DCMAKE_DISABLE_FIND_PACKAGE_VTK:BOOL=TRUE" if build.without? "vtk"
 
+	args << "-DBUILD_visualization:BOOL=ON"
+
     args << ".."
     mkdir "macbuild" do
       system "cmake", *args
